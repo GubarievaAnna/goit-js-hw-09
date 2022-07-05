@@ -20,30 +20,29 @@ flatpickr('#datetime-picker', {
     const dif = selectedDate - Date.now();
 
     if (dif < 0) {
-      btnStartEl.disabled = true;
-      Notiflix.Notify.failure('Please choose a date in the future', {
-        width: '400px',
-        borderRadius: '5px',
-        fontSize: '20px',
-        position: 'center-center',
-      });
+      disableBtnStart(true);
+      createAlert();
       return;
     }
 
-    btnStartEl.disabled = false;
+    disableBtnStart(false);
   },
 });
 
 btnStartEl.addEventListener('click', onBtnStartClick);
 
 function onBtnStartClick() {
-  btnStartEl.disabled = true;
+  disableBtnStart(true);
   inputEl.disabled = true;
   updateTimer();
 
   setInterval(() => {
     updateTimer();
   }, 1000);
+}
+
+function disableBtnStart(status) {
+  btnStartEl.disabled = status;
 }
 
 function convertMs(ms) {
@@ -74,4 +73,13 @@ function createTimer({ days, hours, minutes, seconds }) {
 function updateTimer() {
   const dif = selectedDate - Date.now();
   createTimer(convertMs(dif));
+}
+
+function createAlert() {
+  return Notiflix.Notify.failure('Please choose a date in the future', {
+    width: '400px',
+    borderRadius: '5px',
+    fontSize: '20px',
+    position: 'center-center',
+  });
 }
