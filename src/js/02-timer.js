@@ -39,10 +39,10 @@ btnStartEl.addEventListener('click', onBtnStartClick);
 function onBtnStartClick() {
   btnStartEl.disabled = true;
   inputEl.disabled = true;
-  startTimer();
+  updateTimer();
 
   setInterval(() => {
-    startTimer();
+    updateTimer();
   }, 1000);
 }
 
@@ -71,7 +71,7 @@ function createTimer({ days, hours, minutes, seconds }) {
   spanSeconds.textContent = pad(seconds);
 }
 
-function startTimer() {
+function updateTimer() {
   const dif = selectedDate - Date.now();
   createTimer(convertMs(dif));
 }
