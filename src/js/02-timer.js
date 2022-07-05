@@ -1,6 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
+const inputEl = document.querySelector('#datetime-picker');
 const btnStartEl = document.querySelector('button[data-start]');
 const spanDays = document.querySelector('[data-days]');
 const spanHours = document.querySelector('[data-hours]');
@@ -31,6 +32,7 @@ btnStartEl.addEventListener('click', onBtnStartClick);
 
 function onBtnStartClick() {
   btnStartEl.disabled = true;
+  inputEl.disabled = true;
 
   setInterval(() => {
     const dif = selectedDate - Date.now();
