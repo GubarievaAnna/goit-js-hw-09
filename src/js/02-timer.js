@@ -17,7 +17,7 @@ flatpickr('#datetime-picker', {
   minuteIncrement: 1,
   onClose(selectedDates) {
     selectedDate = selectedDates[0];
-    const dif = selectedDates[0] - Date.now();
+    const dif = selectedDate - Date.now();
 
     if (dif < 0) {
       btnStartEl.disabled = true;
@@ -39,14 +39,10 @@ btnStartEl.addEventListener('click', onBtnStartClick);
 function onBtnStartClick() {
   btnStartEl.disabled = true;
   inputEl.disabled = true;
+  startTimer();
 
   setInterval(() => {
-    const dif = selectedDate - Date.now();
-    const { days, hours, minutes, seconds } = convertMs(dif);
-    spanDays.textContent = pad(days);
-    spanHours.textContent = pad(hours);
-    spanMinutes.textContent = pad(minutes);
-    spanSeconds.textContent = pad(seconds);
+    startTimer();
   }, 1000);
 }
 
@@ -66,4 +62,16 @@ function convertMs(ms) {
 
 function pad(number) {
   return number.toString().padStart('2', '0');
+}
+
+function createTimer({ days, hours, minutes, seconds }) {
+  spanDays.textContent = pad(days);
+  spanHours.textContent = pad(hours);
+  spanMinutes.textContent = pad(minutes);
+  spanSeconds.textContent = pad(seconds);
+}
+
+function startTimer() {
+  const dif = selectedDate - Date.now();
+  createTimer(convertMs(dif));
 }
