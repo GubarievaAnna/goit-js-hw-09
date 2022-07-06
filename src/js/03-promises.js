@@ -9,13 +9,10 @@ formEl.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(event) {
   event.preventDefault();
-  let position = 0;
   let delay = Number(inputDelay.value);
 
   for (let i = 1; i <= Number(inputAmount.value); i++) {
-    position += 1;
-
-    createPromise(position, delay)
+    createPromise(i, delay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
       })
