@@ -9,6 +9,7 @@ const spanHours = document.querySelector('[data-hours]');
 const spanMinutes = document.querySelector('[data-minutes]');
 const spanSeconds = document.querySelector('[data-seconds]');
 let selectedDate = null;
+let intervalId = null;
 
 flatpickr('#datetime-picker', {
   enableTime: true,
@@ -33,16 +34,19 @@ btnStartEl.addEventListener('click', onBtnStartClick);
 
 function onBtnStartClick() {
   disableBtnStart(true);
-  inputEl.disabled = true;
+  disableInput(true);
   updateTimer();
 
-  setInterval(() => {
+  intervalId = setInterval(() => {
     updateTimer();
   }, 1000);
 }
 
 function disableBtnStart(status) {
   btnStartEl.disabled = status;
+}
+function disableInput(status) {
+  inputEl.disabled = status;
 }
 
 function convertMs(ms) {
@@ -72,6 +76,12 @@ function createTimer({ days, hours, minutes, seconds }) {
 
 function updateTimer() {
   const dif = selectedDate - Date.now();
+  if (dif <= 0) {
+    clearInterval(intervalId);
+    disableBtnStart(false);
+    disableInput(false);
+    return;
+  }
   createTimer(convertMs(dif));
 }
 

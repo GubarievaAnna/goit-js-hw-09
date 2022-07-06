@@ -12,14 +12,7 @@ function onFormSubmit(event) {
   let delay = Number(inputDelay.value);
 
   for (let i = 1; i <= Number(inputAmount.value); i++) {
-    createPromise(i, delay)
-      .then(({ position, delay }) => {
-        Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
-      })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(`Rejected promise ${position} in ${delay}ms`);
-      });
-
+    createPromise(i, delay).then(onSuccess).catch(onError);
     delay += Number(inputStep.value);
   }
 }
@@ -35,4 +28,11 @@ function createPromise(position, delay) {
       }
     }, delay);
   });
+}
+
+function onSuccess({ position, delay }) {
+  Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+}
+function onError({ position, delay }) {
+  Notiflix.Notify.failure(`Rejected promise ${position} in ${delay}ms`);
 }
