@@ -78,7 +78,6 @@ function updateTimer() {
   const dif = selectedDate - Date.now();
   if (dif <= 0) {
     clearInterval(intervalId);
-    disableBtnStart(false);
     disableInput(false);
     return;
   }
